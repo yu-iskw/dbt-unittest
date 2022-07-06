@@ -1,0 +1,17 @@
+---
+config:
+  send_anonymous_usage_stats: false
+  use_colors: true
+
+default:
+  target: bigquery
+  outputs:
+    bigquery:
+      type: bigquery
+      method: oauth
+      project: "test-project"
+      dataset: "dbt_unittest"
+      priority: "{{ env_var('DBT_BIGQUERY_PRIORITY', 'interactive') }}"
+      threads: |
+        {{ env_var("DBT_THREADS", 5) }}
+      location: "US"
