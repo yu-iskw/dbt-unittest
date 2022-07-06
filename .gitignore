@@ -1,0 +1,16 @@
+# dbt
+./dbt_packages/
+./logs/
+./target/
+
+# integration_tests
+integration_tests/dbt_packages/
+!integration_tests/dbt_packages/.gitkeep
+integration_tests/logs/
+!integration_tests/logs/.gitkeep
+integration_tests/target/
+!integration_tests/target/.gitkeep
+!integration_tests/models/.gitkeep
+
+# IntelliJ
+.idea/

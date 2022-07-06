@@ -1,0 +1,9 @@
+dbt-bigquery==1.1.0
+dbt-core==1.1.0
+
+# TODO If dbt fix the issue, we will get rid of the version pinning.
+# https://getdbt.slack.com/archives/C013MLFR7BQ/p1645165044747909
+# > Looks like markupsafe updated to version 2.1.0 about 2 hours ago and removed support
+# > for soft_unicode since it was deprecated and says we should be using soft_str
+# > instead (https://markupsafe.palletsprojects.com/en/2.1.x/changes/).
+MarkupSafe==2.0.1

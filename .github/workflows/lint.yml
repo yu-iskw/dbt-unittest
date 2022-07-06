@@ -1,0 +1,26 @@
+name: Lint resources
+on:
+  pull_request:
+    paths:
+      - ci/*.sh
+      - macros/*/*.yml
+
+jobs:
+  check-style:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: lint-bash
+        run: |
+          sudo apt-get install -y shellcheck
+          bash ./ci/lint_bash.sh
+
+      - name: lint-yaml
+        run: |
+          sudo apt-get install -y yamllint
+          bash ./ci/lint_yaml.sh
