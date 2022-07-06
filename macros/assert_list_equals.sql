@@ -6,15 +6,16 @@
     {% do exceptions.raise_compiler_error("FAILED: 2nd argument " ~ value ~ " is not iterable.") %}
   {% endif %}
 
-  {% for x in value %}
-    {% if x not in expected %}
-      {% do exceptions.raise_compiler_error("FAILED: " ~ x ~ " of 1st argument is not in " ~ expected ~ ".") %}
-    {% endif %}
-  {% endfor %}
+  {% set length_of_1st_arg = value | length %}
+  {% set length_of_2nd_arg = expected | length %}
 
-  {% for x in expected %}
-    {% if x not in value %}
-      {% do exceptions.raise_compiler_error("FAILED: " ~ x ~ " of 2nd argument is not in " ~ value ~ ".") %}
+  {% if length_of_1st_arg != length_of_2nd_arg %}
+      {% do exceptions.raise_compiler_error("FAILED: lengths of the two are not equal.") %}
+  {% endif %}
+
+  {% for i in range(length_of_1st_arg) %}
+    {% if value[i] != expected[i] %}
+      {% do exceptions.raise_compiler_error("FAILED: values at the index {{ i }} is not equal.") %}
     {% endif %}
   {% endfor %}
 
