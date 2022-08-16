@@ -2,6 +2,6 @@
   {% if value in expected %}
     {% do log("SUCCESS") %}
   {% else %}
-    {% do exceptions.raise_compiler_error("FAILED: value " ~ value ~ " is not none.") %}
+    {% do exceptions.raise_compiler_error("FAILED: value " ~ value ~ " is not in " ~ expected ~ ".") %}
   {% endif %}
 {% endmacro %}

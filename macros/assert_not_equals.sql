@@ -2,6 +2,6 @@
   {% if value != expected %}
     {% do log("SUCCESS") %}
   {% else %}
-    {% do exceptions.raise_compiler_error("FAILED: " ~ value ~ " is not equal to " ~ expected ~ ".") %}
+    {% do exceptions.raise_compiler_error("FAILED: " ~ value ~ " is equal to " ~ expected ~ ".") %}
   {% endif %}
 {% endmacro %}
