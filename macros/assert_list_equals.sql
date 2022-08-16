@@ -3,7 +3,7 @@
     {% do exceptions.raise_compiler_error("FAILED: 1st argument " ~ value ~ " is not iterable.") %}
   {% endif %}
   {% if expected is not iterable %}
-    {% do exceptions.raise_compiler_error("FAILED: 2nd argument " ~ value ~ " is not iterable.") %}
+    {% do exceptions.raise_compiler_error("FAILED: 2nd argument " ~ expected ~ " is not iterable.") %}
   {% endif %}
 
   {% set length_of_1st_arg = value | length %}

@@ -1,9 +1,9 @@
 {% macro assert_dict_equals(value, expected) %}
   {% if value is not mapping %}
-    {% do exceptions.raise_compiler_error("FAILED: 1st argument " ~ value ~ " is not mapping.") %}
+    {% do exceptions.raise_compiler_error("FAILED: 1st argument " ~ value ~ " is not a mapping.") %}
   {% endif %}
   {% if expected is not mapping %}
-    {% do exceptions.raise_compiler_error("FAILED: 2nd argument " ~ value ~ " is not mapping.") %}
+    {% do exceptions.raise_compiler_error("FAILED: 2nd argument " ~ expected ~ " is not a mapping.") %}
   {% endif %}
 
   {% for k, v in value.items() %}
@@ -22,7 +22,7 @@
 
   {% for k, v in expected.items() %}
     {% if k not in values %}
-      {% do exceptions.raise_compiler_error("FAILED: key " ~ k ~ " of 1st argument is not in " ~ expected ~ ".") %}
+      {% do exceptions.raise_compiler_error("FAILED: key " ~ k ~ " of 1st argument is not in " ~ values ~ ".") %}
     {% endif %}
 
     {% if v is none and values[k] is not none %}
