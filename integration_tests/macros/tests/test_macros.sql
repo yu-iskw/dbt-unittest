@@ -7,6 +7,8 @@
 
   {% do test_assert_in() %}
 
+  {% do test_assert_not_in() %}
+
   {% do test_assert_is_none() %}
 
   {% do test_assert_is_not_none() %}
