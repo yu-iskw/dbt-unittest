@@ -92,7 +92,7 @@ Test that member is not in container.
 
 **Usage:**
 ```sql
-  {{ dbt_unittest.assert_not_in(1, [1, 2, 3]) }}
+  {{ dbt_unittest.assert_not_in(4, [1, 2, 3]) }}
 ```
 
 ### `assert_list_equals`
