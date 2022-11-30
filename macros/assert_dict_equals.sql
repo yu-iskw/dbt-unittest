@@ -21,15 +21,15 @@
   {% endfor %}
 
   {% for k, v in expected.items() %}
-    {% if k not in values %}
-      {% do exceptions.raise_compiler_error("FAILED: key " ~ k ~ " of 1st argument is not in " ~ values ~ ".") %}
+    {% if k not in value %}
+      {% do exceptions.raise_compiler_error("FAILED: key " ~ k ~ " of 2nd argument is not in " ~ value ~ ".") %}
     {% endif %}
 
-    {% if v is none and values[k] is not none %}
+    {% if v is none and value[k] is not none %}
       {% do exceptions.raise_compiler_error("FAILED: values on the key " ~ k ~ " are not same.") %}
     {% endif %}
 
-    {% if v != values[k] %}
+    {% if v != value[k] %}
       {% do exceptions.raise_compiler_error("FAILED: values on the key " ~ k ~ " are not same.") %}
     {% endif %}
   {% endfor %}
