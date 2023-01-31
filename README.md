@@ -110,3 +110,7 @@ Test that two dictionaries are equal.
 ```sql
   {{ dbt_unittest.assert_dict_equals({"k": 1}, {"k": 1}) }}
 ```
+
+## Contributors
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
