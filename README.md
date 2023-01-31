@@ -113,4 +113,35 @@ Test that two dictionaries are equal.
 
 ## Contributors
 <!-- readme: contributors -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/yu-iskw">
+            <img src="https://avatars.githubusercontent.com/u/1523515?v=4" width="100;" alt="yu-iskw"/>
+            <br />
+            <sub><b>Yu Ishikawa</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/dbeatty10">
+            <img src="https://avatars.githubusercontent.com/u/44704949?v=4" width="100;" alt="dbeatty10"/>
+            <br />
+            <sub><b>Doug Beatty</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/ernestoongaro">
+            <img src="https://avatars.githubusercontent.com/u/47784?v=4" width="100;" alt="ernestoongaro"/>
+            <br />
+            <sub><b>Ernesto Ongaro</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/rlh1994">
+            <img src="https://avatars.githubusercontent.com/u/8260415?v=4" width="100;" alt="rlh1994"/>
+            <br />
+            <sub><b>Ryan Hill</b></sub>
+        </a>
+    </td></tr>
+</table>
 <!-- readme: contributors -end -->
