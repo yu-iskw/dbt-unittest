@@ -1,2 +1,4 @@
 dbt-bigquery==1.3.0
 dbt-core==1.3.0
+
+pytz
