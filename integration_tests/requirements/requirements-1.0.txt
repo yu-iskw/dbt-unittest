@@ -1,6 +1,8 @@
 dbt-bigquery==1.0.0
 dbt-core==1.0.0
 
+pytz
+
 # TODO If dbt fix the issue, we will get rid of the version pinning.
 # https://getdbt.slack.com/archives/C013MLFR7BQ/p1645165044747909
 # > Looks like markupsafe updated to version 2.1.0 about 2 hours ago and removed support
