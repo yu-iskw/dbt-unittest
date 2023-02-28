@@ -48,7 +48,7 @@ jobs:
       - name: Install dbt
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
-          pip install --no-cache -r "requirements/${{ matrix.pip-requirements }}"
+          pip install -r "requirements/${{ matrix.pip-requirements }}"
       - name: Run unit tests
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
