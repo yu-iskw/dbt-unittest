@@ -16,6 +16,7 @@ This is a dbt package to enhance dbt package development by providing unit testi
   * [`assert_not_in`](#assert_not_in)
   * [`assert_list_equals`](#assert_list_equals)
   * [`assert_dict_equals`](#assert_dict_equals)
+- [Log messages](#log-messages)
 
 <!-- tocstop -->
 
@@ -109,6 +110,12 @@ Test that two dictionaries are equal.
 **Usage:**
 ```sql
   {{ dbt_unittest.assert_dict_equals({"k": 1}, {"k": 1}) }}
+```
+
+## Log messages
+Test failures are written to dbt's log file and to stdout. Test passes are written only to dbt's log file by default. To write test passes to stdout as well, pass `true` to the `stdout` parameter in the macro calls:
+```sql
+{{ dbt_unittest.assert_equals("foo", "foo", stdout=true)}}
 ```
 
 ## Contributors
