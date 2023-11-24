@@ -1,4 +1,4 @@
-{% macro assert_not_equals(value, expected) %}
+{% macro assert_not_equals(value, expected, stdout=false) %}
   {% if value != expected %}
     {% do log("SUCCESS") %}
   {% else %}

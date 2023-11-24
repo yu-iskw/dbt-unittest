@@ -1,4 +1,4 @@
-{% macro assert_not_in(value, expected) %}
+{% macro assert_not_in(value, expected, stdout=false) %}
   {% if value not in expected %}
     {% do log("SUCCESS") %}
   {% else %}

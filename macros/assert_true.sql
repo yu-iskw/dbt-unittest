@@ -1,4 +1,4 @@
-{% macro assert_true(value) %}
+{% macro assert_true(value, stdout=false) %}
   {% if value is not boolean %}
     {% do exceptions.raise_compiler_error("FAILED: " ~ value ~ " is not boolean.") %}
   {% endif %}

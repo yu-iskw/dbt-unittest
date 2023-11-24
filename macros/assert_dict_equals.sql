@@ -1,4 +1,4 @@
-{% macro assert_dict_equals(value, expected) %}
+{% macro assert_dict_equals(value, expected, stdout=false) %}
   {% if value is not mapping %}
     {% do exceptions.raise_compiler_error("FAILED: 1st argument " ~ value ~ " is not a mapping.") %}
   {% endif %}
@@ -34,5 +34,5 @@
     {% endif %}
   {% endfor %}
 
-  {% do log("SUCCESS") %}
+  {% do log("SUCCESS", info=stdout) %}
 {% endmacro %}

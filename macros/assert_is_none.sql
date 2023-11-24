@@ -1,6 +1,6 @@
-{% macro assert_is_none(value) %}
+{% macro assert_is_none(value, stdout=false) %}
   {% if value is none %}
-    {% do log("SUCCESS") %}
+    {% do log("SUCCESS", info=stdout) %}
   {% else %}
     {% do exceptions.raise_compiler_error("FAILED: value " ~ value ~ " is not none.") %}
   {% endif %}

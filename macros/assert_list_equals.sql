@@ -1,4 +1,4 @@
-{% macro assert_list_equals(value, expected) %}
+{% macro assert_list_equals(value, expected, stdout=false) %}
   {% if value is not iterable %}
     {% do exceptions.raise_compiler_error("FAILED: 1st argument " ~ value ~ " is not iterable.") %}
   {% endif %}
@@ -19,5 +19,5 @@
     {% endif %}
   {% endfor %}
 
-  {% do log("SUCCESS") %}
+  {% do log("SUCCESS", info=stdout) %}
 {% endmacro %}
