@@ -48,6 +48,12 @@ jobs:
             python-version: "3.10"
           - pip-requirements: "requirements-1.6.txt"
             python-version: "3.11"
+          - pip-requirements: "requirements-1.7.txt"
+            python-version: "3.9"
+          - pip-requirements: "requirements-1.7.txt"
+            python-version: "3.10"
+          - pip-requirements: "requirements-1.7.txt"
+            python-version: "3.11"
     defaults:
       run:
         shell: bash
