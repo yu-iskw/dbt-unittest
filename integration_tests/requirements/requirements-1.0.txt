@@ -10,3 +10,4 @@ pytz
 # > instead (https://markupsafe.palletsprojects.com/en/2.1.x/changes/).
 MarkupSafe==2.0.1
 werkzeug>=3.0.1 # not directly required, pinned by Snyk to avoid a vulnerability
+jinja2>=3.1.3 # not directly required, pinned by Snyk to avoid a vulnerability
