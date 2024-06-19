@@ -2,4 +2,5 @@ dbt-bigquery==1.2.0
 dbt-core==1.2.0
 
 pytz
-requests>=2.32.0 # not directly required, pinned by Snyk to avoid a vulnerability
+requests>=2.32.2 # not directly required, pinned by Snyk to avoid a vulnerability
+urllib3>=2.2.2 # not directly required, pinned by Snyk to avoid a vulnerability
