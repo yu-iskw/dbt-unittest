@@ -65,10 +65,12 @@ jobs:
         shell: bash
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+        uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: "requirements/${{ matrix.pip-requirements }}"
       - name: Install pip
         run: |
           pip install -U pip==23.0.1
@@ -76,15 +78,16 @@ jobs:
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
           # Use 'legacy-resolver' to speed up
-          pip install -r "requirements/${{ matrix.pip-requirements }}" --use-deprecated "legacy-resolver"
+          pip install -r "requirements/${{ matrix.pip-requirements }}"
       - name: Run unit tests
+        id: run-unit-tests
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
           bash run_unit_tests.sh
       # Save artifacts for debug
       - name: Save logs and artifacts if failed
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: save-logs-and-target-${{ matrix.python-version }}-${{ matrix.pip-requirements }}
           retention-days: 3
@@ -92,4 +95,6 @@ jobs:
             integration_tests/logs
             integration_tests/target
       - id: exit
-        run: exit ${{ steps.apply.outputs.exitcode }}
+        if: ${{ steps.run-unit-tests.outcome == 'failure' }}
+        run: |
+          exit 1
