@@ -28,9 +28,13 @@
     {% endif %}
   {% endfor %}
 
-  {# Check values #}
+  {# Check values, recursively for nested dicts #}
   {% for key in actual_keys %}
-    {% if actual[key] != expected[key] %}
+    {% if actual[key] is mapping and expected[key] is mapping %}
+      {% if not dbt_unittest.dict_equals(actual[key], expected[key]) %}
+        {{ return(false) }}
+      {% endif %}
+    {% elif actual[key] != expected[key] %}
       {{ return(false) }}
     {% endif %}
   {% endfor %}
