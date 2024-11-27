@@ -39,4 +39,48 @@
   {% if result6 %}
     {{ exceptions.raise_compiler_error("Failed: Comparing dictionary with None should fail") }}
   {% endif %}
+
+  {# Test None equality #}
+  {% set result7 = dbt_unittest.dict_equals(none, none) %}
+  {% if not result7 %}
+    {{ exceptions.raise_compiler_error("Failed: None should be equal to None") }}
+  {% endif %}
+
+  {# Test nested dictionary equality #}
+  {% set nested_dict1 = {'a': 1, 'b': {'c': 2, 'd': 3}} %}
+  {% set nested_dict2 = {'a': 1, 'b': {'c': 2, 'd': 3}} %}
+  {% set result8 = dbt_unittest.dict_equals(nested_dict1, nested_dict2) %}
+  {% if not result8 %}
+    {{ exceptions.raise_compiler_error("Failed: Identical nested dictionaries should be equal") }}
+  {% endif %}
+
+  {# Test nested dictionary inequality #}
+  {% set nested_dict3 = {'a': 1, 'b': {'c': 2, 'd': 4}} %}
+  {% set result9 = dbt_unittest.dict_equals(nested_dict1, nested_dict3) %}
+  {% if result9 %}
+    {{ exceptions.raise_compiler_error("Failed: Nested dictionaries with different values should not be equal") }}
+  {% endif %}
+
+  {# Test empty dictionary equality #}
+  {% set empty_dict1 = {} %}
+  {% set empty_dict2 = {} %}
+  {% set result10 = dbt_unittest.dict_equals(empty_dict1, empty_dict2) %}
+  {% if not result10 %}
+    {{ exceptions.raise_compiler_error("Failed: Empty dictionaries should be equal") }}
+  {% endif %}
+
+  {# Test dictionary with different value types #}
+  {% set dict_mixed1 = {'a': 1, 'b': 'string', 'c': true} %}
+  {% set dict_mixed2 = {'a': 1, 'b': 'string', 'c': true} %}
+  {% set result11 = dbt_unittest.dict_equals(dict_mixed1, dict_mixed2) %}
+  {% if not result11 %}
+    {{ exceptions.raise_compiler_error("Failed: Dictionaries with mixed value types should be equal") }}
+  {% endif %}
+
+  {# Test dictionary with different value types - inequality #}
+  {% set dict_mixed3 = {'a': 1, 'b': 'string', 'c': false} %}
+  {% set result12 = dbt_unittest.dict_equals(dict_mixed1, dict_mixed3) %}
+  {% if result12 %}
+    {{ exceptions.raise_compiler_error("Failed: Dictionaries with different boolean values should not be equal") }}
+  {% endif %}
 {% endmacro %}
