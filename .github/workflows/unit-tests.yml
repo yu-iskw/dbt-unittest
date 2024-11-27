@@ -18,41 +18,47 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - pip-requirements: "requirements-1.0.txt"
+          - pip-requirements: requirements-1.0.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.1.txt"
+          - pip-requirements: requirements-1.1.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.2.txt"
+          - pip-requirements: requirements-1.2.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.2.txt"
+          - pip-requirements: requirements-1.2.txt
             python-version: "3.10"
-          - pip-requirements: "requirements-1.3.txt"
+          - pip-requirements: requirements-1.3.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.3.txt"
+          - pip-requirements: requirements-1.3.txt
             python-version: "3.10"
-          - pip-requirements: "requirements-1.4.txt"
+          - pip-requirements: requirements-1.4.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.4.txt"
+          - pip-requirements: requirements-1.4.txt
             python-version: "3.10"
-          - pip-requirements: "requirements-1.4.txt"
+          - pip-requirements: requirements-1.4.txt
             python-version: "3.11"
-          - pip-requirements: "requirements-1.5.txt"
+          - pip-requirements: requirements-1.5.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.5.txt"
+          - pip-requirements: requirements-1.5.txt
             python-version: "3.10"
-          - pip-requirements: "requirements-1.5.txt"
+          - pip-requirements: requirements-1.5.txt
             python-version: "3.11"
-          - pip-requirements: "requirements-1.6.txt"
+          - pip-requirements: requirements-1.6.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.6.txt"
+          - pip-requirements: requirements-1.6.txt
             python-version: "3.10"
-          - pip-requirements: "requirements-1.6.txt"
+          - pip-requirements: requirements-1.6.txt
             python-version: "3.11"
-          - pip-requirements: "requirements-1.7.txt"
+          - pip-requirements: requirements-1.7.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.7.txt"
+          - pip-requirements: requirements-1.7.txt
             python-version: "3.10"
-          - pip-requirements: "requirements-1.7.txt"
+          - pip-requirements: requirements-1.7.txt
+            python-version: "3.11"
+          - pip-requirements: requirements-1.8.txt
+            python-version: "3.9"
+          - pip-requirements: requirements-1.8.txt
+            python-version: "3.10"
+          - pip-requirements: requirements-1.8.txt
             python-version: "3.11"
     defaults:
       run:
