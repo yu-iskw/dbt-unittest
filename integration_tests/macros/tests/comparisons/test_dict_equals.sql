@@ -61,6 +61,36 @@
     {{ exceptions.raise_compiler_error("Failed: Nested dictionaries with different values should not be equal") }}
   {% endif %}
 
+  {# Test nested dictionaries with additional nested levels #}
+  {% set nested_dict4 = {'a': 1, 'b': {'c': {'x': 10}, 'd': 3}} %}
+  {% set nested_dict5 = {'a': 1, 'b': {'c': {'x': 10}, 'd': 3}} %}
+  {% set result13 = dbt_unittest.dict_equals(nested_dict4, nested_dict5) %}
+  {% if not result13 %}
+    {{ exceptions.raise_compiler_error("Failed: Identical deeply nested dictionaries should be equal") }}
+  {% endif %}
+
+  {# Test nested dictionaries with differing nested levels #}
+  {% set nested_dict6 = {'a': 1, 'b': {'c': {'x': 11}, 'd': 3}} %}
+  {% set result14 = dbt_unittest.dict_equals(nested_dict4, nested_dict6) %}
+  {% if result14 %}
+    {{ exceptions.raise_compiler_error("Failed: Deeply nested dictionaries with different values should not be equal") }}
+  {% endif %}
+
+  {# Test nested dictionaries with lists as values #}
+  {% set nested_dict7 = {'a': 1, 'b': {'c': [1, 2, 3], 'd': 3}} %}
+  {% set nested_dict8 = {'a': 1, 'b': {'c': [1, 2, 3], 'd': 3}} %}
+  {% set result15 = dbt_unittest.dict_equals(nested_dict7, nested_dict8) %}
+  {% if not result15 %}
+    {{ exceptions.raise_compiler_error("Failed: Identical nested dictionaries with list values should be equal") }}
+  {% endif %}
+
+  {# Test nested dictionaries with lists containing different elements #}
+  {% set nested_dict9 = {'a': 1, 'b': {'c': [1, 2, 4], 'd': 3}} %}
+  {% set result16 = dbt_unittest.dict_equals(nested_dict7, nested_dict9) %}
+  {% if result16 %}
+    {{ exceptions.raise_compiler_error("Failed: Nested dictionaries with lists containing different elements should not be equal") }}
+  {% endif %}
+
   {# Test empty dictionary equality #}
   {% set empty_dict1 = {} %}
   {% set empty_dict2 = {} %}
