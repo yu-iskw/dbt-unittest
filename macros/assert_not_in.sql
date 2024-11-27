@@ -1,7 +1,5 @@
-{% macro assert_not_in(value, expected) %}
-  {% if value not in expected %}
-    {% do log("SUCCESS") %}
-  {% else %}
-    {% do exceptions.raise_compiler_error("FAILED: value " ~ value ~ " is in " ~ expected ~ ".") %}
+{% macro assert_not_in(value, unexpected) %}
+  {% if not dbt_unittest.not_in(value, unexpected) %}
+    {% do exceptions.raise_compiler_error("FAILED: " ~ value ~ " is in " ~ unexpected ~ ".") %}
   {% endif %}
 {% endmacro %}
