@@ -18,49 +18,55 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - pip-requirements: "requirements-1.0.txt"
+          - pip-requirements: requirements-1.0.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.1.txt"
+          - pip-requirements: requirements-1.1.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.2.txt"
+          - pip-requirements: requirements-1.2.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.2.txt"
+          - pip-requirements: requirements-1.2.txt
             python-version: "3.10"
-          - pip-requirements: "requirements-1.3.txt"
+          - pip-requirements: requirements-1.3.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.3.txt"
+          - pip-requirements: requirements-1.3.txt
             python-version: "3.10"
-          - pip-requirements: "requirements-1.4.txt"
+          - pip-requirements: requirements-1.4.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.4.txt"
+          - pip-requirements: requirements-1.4.txt
             python-version: "3.10"
-          - pip-requirements: "requirements-1.4.txt"
+          - pip-requirements: requirements-1.4.txt
             python-version: "3.11"
-          - pip-requirements: "requirements-1.5.txt"
+          - pip-requirements: requirements-1.5.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.5.txt"
+          - pip-requirements: requirements-1.5.txt
             python-version: "3.10"
-          - pip-requirements: "requirements-1.5.txt"
+          - pip-requirements: requirements-1.5.txt
             python-version: "3.11"
-          - pip-requirements: "requirements-1.6.txt"
+          - pip-requirements: requirements-1.6.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.6.txt"
+          - pip-requirements: requirements-1.6.txt
             python-version: "3.10"
-          - pip-requirements: "requirements-1.6.txt"
+          - pip-requirements: requirements-1.6.txt
             python-version: "3.11"
-          - pip-requirements: "requirements-1.7.txt"
+          - pip-requirements: requirements-1.7.txt
             python-version: "3.9"
-          - pip-requirements: "requirements-1.7.txt"
+          - pip-requirements: requirements-1.7.txt
             python-version: "3.10"
-          - pip-requirements: "requirements-1.7.txt"
+          - pip-requirements: requirements-1.7.txt
+            python-version: "3.11"
+          - pip-requirements: requirements-1.8.txt
+            python-version: "3.9"
+          - pip-requirements: requirements-1.8.txt
+            python-version: "3.10"
+          - pip-requirements: requirements-1.8.txt
             python-version: "3.11"
     defaults:
       run:
         shell: bash
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+        uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install pip
@@ -70,15 +76,16 @@ jobs:
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
           # Use 'legacy-resolver' to speed up
-          pip install -r "requirements/${{ matrix.pip-requirements }}" --use-deprecated "legacy-resolver"
+          pip install -r "requirements/${{ matrix.pip-requirements }}"
       - name: Run unit tests
+        id: run-unit-tests
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
           bash run_unit_tests.sh
       # Save artifacts for debug
       - name: Save logs and artifacts if failed
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: save-logs-and-target-${{ matrix.python-version }}-${{ matrix.pip-requirements }}
           retention-days: 3
@@ -86,4 +93,6 @@ jobs:
             integration_tests/logs
             integration_tests/target
       - id: exit
-        run: exit ${{ steps.apply.outputs.exitcode }}
+        if: ${{ steps.run-unit-tests.outcome == 'failure' }}
+        run: |
+          exit 1
