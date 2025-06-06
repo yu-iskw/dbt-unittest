@@ -1,4 +1,4 @@
-{% macro in(value, expected) %}
+{% macro contains(value, expected) %}
   {% set is_in = false %}
 
   {# Handle different types of collections #}

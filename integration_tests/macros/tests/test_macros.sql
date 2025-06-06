@@ -15,7 +15,8 @@
   {% do test_not_equals() %}
   {% do test_is_true() %}
   {% do test_is_false() %}
-  {% do test_in() %}
+  {% do test_contains() %}
   {% do test_not_in() %}
   {% do test_dict_equals() %}
+  {% do test_list_equals() %}
 {% endmacro %}
