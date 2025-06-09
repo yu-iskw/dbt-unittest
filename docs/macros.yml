@@ -1,0 +1,65 @@
+version: 2
+
+macros:
+  - name: assert_true
+    description: "Test that expr is true."
+    arguments:
+      - name: condition
+        description: "Expression to evaluate."
+  - name: assert_false
+    description: "Test that expr is false."
+    arguments:
+      - name: condition
+        description: "Expression to evaluate."
+  - name: assert_is_none
+    description: "Test that expr is None."
+    arguments:
+      - name: value
+        description: "Value to evaluate."
+  - name: assert_is_not_none
+    description: "Test that expr is not None."
+    arguments:
+      - name: value
+        description: "Value to evaluate."
+  - name: assert_equals
+    description: "Test that first and second are equal."
+    arguments:
+      - name: actual
+        description: "Actual value."
+      - name: expected
+        description: "Expected value."
+  - name: assert_not_equals
+    description: "Test that first and second are not equal."
+    arguments:
+      - name: actual
+        description: "Actual value."
+      - name: unexpected
+        description: "Value that should not equal actual."
+  - name: assert_in
+    description: "Test that member is in container."
+    arguments:
+      - name: value
+        description: "Value expected to be present."
+      - name: expected
+        description: "Container to search in."
+  - name: assert_not_in
+    description: "Test that member is not in container."
+    arguments:
+      - name: value
+        description: "Value expected to be absent."
+      - name: unexpected
+        description: "Container the value should not be in."
+  - name: assert_list_equals
+    description: "Tests that two lists are equal."
+    arguments:
+      - name: actual
+        description: "Actual list."
+      - name: expected
+        description: "Expected list."
+  - name: assert_dict_equals
+    description: "Test that two dictionaries are equal."
+    arguments:
+      - name: actual
+        description: "Actual dictionary."
+      - name: expected
+        description: "Expected dictionary."
