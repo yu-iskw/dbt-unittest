@@ -1,0 +1,65 @@
+version: 2
+
+macros:
+  - name: equals
+    description: "Return true if two values are equal."
+    arguments:
+      - name: actual
+        description: "First value."
+      - name: expected
+        description: "Second value."
+  - name: not_equals
+    description: "Return true if two values are not equal."
+    arguments:
+      - name: actual
+        description: "First value."
+      - name: unexpected
+        description: "Value to compare against."
+  - name: contains
+    description: "Return true if a value exists within a collection."
+    arguments:
+      - name: value
+        description: "Value to search for."
+      - name: expected
+        description: "Collection to search in."
+  - name: not_in
+    description: "Return true if a value does not exist within a collection."
+    arguments:
+      - name: value
+        description: "Value to check."
+      - name: expected
+        description: "Collection that should not contain the value."
+  - name: is_true
+    description: "Return true when the value is strictly true."
+    arguments:
+      - name: condition
+        description: "Value to evaluate."
+  - name: is_false
+    description: "Return true when the value is strictly false."
+    arguments:
+      - name: condition
+        description: "Value to evaluate."
+  - name: is_none
+    description: "Return true if the value is None."
+    arguments:
+      - name: value
+        description: "Value to evaluate."
+  - name: is_not_none
+    description: "Return true if the value is not None."
+    arguments:
+      - name: value
+        description: "Value to evaluate."
+  - name: list_equals
+    description: "Return true if two lists are equal. Lists may contain nested lists or dictionaries."
+    arguments:
+      - name: actual
+        description: "First list."
+      - name: expected
+        description: "Second list."
+  - name: dict_equals
+    description: "Return true if two dictionaries are equal. Dictionaries may contain nested dictionaries or lists."
+    arguments:
+      - name: actual
+        description: "First dictionary."
+      - name: expected
+        description: "Second dictionary."
