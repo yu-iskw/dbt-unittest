@@ -10,7 +10,7 @@ on:
 #      - integration_tests/macros/
 
 jobs:
-  test:
+  test-dbt-core:
     runs-on: ubuntu-latest
     env:
       DBT_DATA_PRIVACY_TEST_PROJECT: "${{ secrets.DBT_DATA_PRIVACY_TEST_PROJECT }}"
@@ -58,6 +58,39 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: save-logs-and-target-${{ matrix.python-version }}-${{ matrix.pip-requirements }}
+          retention-days: 3
+          path: |
+            integration_tests/logs
+            integration_tests/target
+      - id: exit
+        if: ${{ steps.run-unit-tests.outcome == 'failure' }}
+        run: |
+          exit 1
+
+  test-dbt-fusion:
+    runs-on: ubuntu-latest
+    env:
+      DBT_DATA_PRIVACY_TEST_PROJECT: "${{ secrets.DBT_DATA_PRIVACY_TEST_PROJECT }}"
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install dbt Fusion
+        run: |
+          curl -fsSL https://public.cdn.getdbt.com/fs/install/install.sh | sh -s -- --update
+      - name: Run unit tests
+        id: run-unit-tests
+        working-directory: "${{ github.workspace }}/integration_tests"
+        run: |
+          bash run_unit_tests.sh
+      # Save artifacts for debug
+      - name: Save logs and artifacts if failed
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: save-logs-and-target-fusion
           retention-days: 3
           path: |
             integration_tests/logs
