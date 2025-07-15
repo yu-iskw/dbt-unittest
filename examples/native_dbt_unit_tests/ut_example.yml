@@ -1,0 +1,21 @@
+unit_tests:
+  - name: ut_example
+    model: ut_example
+    description: |
+      Example test that uses dbts unit testing framework, but keeps the logic
+      and asserts all inside the sql. inputs and expects are dummies in the yml.
+      https://github.com/yu-iskw/dbt-unittest
+    given:
+      # we cannot skip the input argument, even when we define them manually in
+      # in the model. run `dbt build --select _dummy_source` before `dbt test`.
+      - input: ref('_dummy_source')
+        rows: []
+    overrides:
+      vars:
+        # unfortunately, this does not work as advertised in the dbt docs
+        # https://docs.getdbt.com/reference/resource-properties/unit-test-overrides
+        # I need to use `dbt test --vars '{"raise_on_error": false}'`
+        raise_on_error: false
+    expect:
+      rows:
+        - { all_passed: 1, message: ''}
