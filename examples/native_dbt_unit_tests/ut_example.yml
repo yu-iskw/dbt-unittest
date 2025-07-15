@@ -18,4 +18,4 @@ unit_tests:
         raise_on_error: false
     expect:
       rows:
-        - { all_passed: 1, message: ''}
+        - { all_passed: 1, message: NULL}

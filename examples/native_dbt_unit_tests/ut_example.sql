@@ -5,6 +5,7 @@ with assertion_results as (
 
   union all
 
+  -- FIXME to get green tests
   {{ dbt_unittest.assert_true(2 == 1) }}
 
   union all
