@@ -1,4 +1,0 @@
-dbt-bigquery>=1.5,<1.6
-dbt-core>=1.5,<1.6
-
-pytz
