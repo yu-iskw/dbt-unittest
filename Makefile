@@ -1,10 +1,5 @@
-lint: lint-yaml lint-bash
-
-lint-yaml:
-	bash ./ci/lint_yaml.sh
-
-lint-bash:
-	bash ./ci/lint_bash.sh
+lint:
+	pre-commit run --all-files
 
 generate-toc:
 	markdown-toc --maxdepth 3 -i README.md

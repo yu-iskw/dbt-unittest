@@ -73,7 +73,7 @@ Test that expr is not None.
 ```
 
 ### `assert_equals`
-Test that first and second are equal. 
+Test that first and second are equal.
 If the values do not compare equal, the test will fail.
 
 **Usage:**
@@ -82,7 +82,7 @@ If the values do not compare equal, the test will fail.
 ```
 
 ### `assert_not_equals`
-Test that first and second are not equal. 
+Test that first and second are not equal.
 If the values do compare equal, the test will fail.
 
 **Usage:**
@@ -107,7 +107,7 @@ Test that member is not in container.
 ```
 
 ### `assert_list_equals`
-Tests that two lists are equal. 
+Tests that two lists are equal.
 
 **Usage:**
 ```sql

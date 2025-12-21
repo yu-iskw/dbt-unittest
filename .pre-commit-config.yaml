@@ -1,0 +1,33 @@
+default_stages:
+  - pre-commit
+  - pre-merge-commit
+  - pre-push
+  - manual
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args: [-s]
+        files: ^(dbt_project\.yml|macros/.*\.yml|integration_tests/.*\.yml)$
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.10.0.1
+    hooks:
+      - id: shellcheck
+        files: ^(ci/.*\.sh|integration_tests/.*\.sh)$
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.9
+    hooks:
+      - id: actionlint-docker
+        files: ^\.github/workflows/.*\.ya?ml$
