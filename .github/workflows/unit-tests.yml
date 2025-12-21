@@ -19,18 +19,32 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - pip-requirements: requirements-1.7.txt
-            python-version: "3.9"
-          - pip-requirements: requirements-1.7.txt
-            python-version: "3.10"
-          - pip-requirements: requirements-1.7.txt
-            python-version: "3.11"
+          # dbt-core 1.8
           - pip-requirements: requirements-1.8.txt
             python-version: "3.9"
           - pip-requirements: requirements-1.8.txt
             python-version: "3.10"
           - pip-requirements: requirements-1.8.txt
             python-version: "3.11"
+          # dbt-core 1.9
+          - pip-requirements: requirements-1.9.txt
+            python-version: "3.10"
+          - pip-requirements: requirements-1.9.txt
+            python-version: "3.11"
+          # dbt-core 1.10
+          - pip-requirements: requirements-1.10.txt
+            python-version: "3.10"
+          - pip-requirements: requirements-1.10.txt
+            python-version: "3.11"
+          - pip-requirements: requirements-1.10.txt
+            python-version: "3.12"
+          # dbt-core 1.11
+          - pip-requirements: requirements-1.11.txt
+            python-version: "3.10"
+          - pip-requirements: requirements-1.11.txt
+            python-version: "3.11"
+          - pip-requirements: requirements-1.11.txt
+            python-version: "3.12"
     defaults:
       run:
         shell: bash
