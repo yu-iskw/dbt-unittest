@@ -1,4 +1,4 @@
-name: Unit tests
+name: Unit tests with Fusion
 on:
   workflow_dispatch:
   push:
