@@ -56,7 +56,7 @@ jobs:
       # Save artifacts for debug
       - name: Save logs and artifacts if failed
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: save-logs-and-target-${{ matrix.python-version }}-${{ matrix.pip-requirements }}
           retention-days: 3
@@ -89,7 +89,7 @@ jobs:
       # Save artifacts for debug
       - name: Save logs and artifacts if failed
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: save-logs-and-target-fusion
           retention-days: 3
