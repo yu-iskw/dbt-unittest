@@ -1,12 +1,19 @@
 default:
-  target: bigquery
+  target: postgres
   outputs:
-    bigquery:
-      type: bigquery
-      method: oauth
-      project: "test-project"
-      dataset: "dbt_unittest"
-      priority: "{{ env_var('DBT_BIGQUERY_PRIORITY', 'interactive') }}"
+    postgres:
+      type: postgres
+      host: "{{ env_var('DBT_POSTGRES_HOST', 'localhost') }}"
+      port: "{{ env_var('DBT_POSTGRES_PORT', 5432) }}"
+      user: "{{ env_var('DBT_POSTGRES_USER', 'postgres') }}"
+      password: "{{ env_var('DBT_POSTGRES_PASSWORD', 'postgres') }}"
+      database: "{{ env_var('DBT_POSTGRES_DATABASE', 'dbt_unittest') }}"
+      schema: "{{ env_var('DBT_POSTGRES_SCHEMA', 'dbt_unittest') }}"
       threads: |
         {{ env_var("DBT_THREADS", 5) }}
-      location: "US"
+    duckdb:
+      type: duckdb
+      path: "{{ env_var('DBT_DUCKDB_PATH', 'integration_tests.duckdb') }}"
+      schema: "{{ env_var('DBT_DUCKDB_SCHEMA', 'dbt_unittest') }}"
+      threads: |
+        {{ env_var("DBT_THREADS", 5) }}

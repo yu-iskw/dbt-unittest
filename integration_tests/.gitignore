@@ -1,0 +1,7 @@
+# uv
+.venv-*/
+
+# dbt
+package-lock.yml
+integration_tests.duckdb
+.user.yml

@@ -13,24 +13,43 @@ on:
 jobs:
   test-dbt-core:
     runs-on: ubuntu-latest
-    env:
-      DBT_DATA_PRIVACY_TEST_PROJECT: "${{ secrets.DBT_DATA_PRIVACY_TEST_PROJECT }}"
     strategy:
       fail-fast: false
       matrix:
         include:
-          - pip-requirements: requirements-1.7.txt
-            python-version: "3.9"
-          - pip-requirements: requirements-1.7.txt
-            python-version: "3.10"
-          - pip-requirements: requirements-1.7.txt
-            python-version: "3.11"
+          # dbt-core 1.8
           - pip-requirements: requirements-1.8.txt
             python-version: "3.9"
           - pip-requirements: requirements-1.8.txt
             python-version: "3.10"
           - pip-requirements: requirements-1.8.txt
             python-version: "3.11"
+          # dbt-core 1.9
+          - pip-requirements: requirements-1.9.txt
+            python-version: "3.10"
+          - pip-requirements: requirements-1.9.txt
+            python-version: "3.11"
+          # dbt-core 1.10
+          - pip-requirements: requirements-1.10.txt
+            python-version: "3.10"
+          - pip-requirements: requirements-1.10.txt
+            python-version: "3.11"
+          - pip-requirements: requirements-1.10.txt
+            python-version: "3.12"
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: dbt_unittest
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     defaults:
       run:
         shell: bash
@@ -42,7 +61,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install pip
         run: |
-          pip install -U pip==23.0.1
+          pip install -U "pip>=25.0.0,<26.0.0"
       - name: Install dbt
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
@@ -59,39 +78,6 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: save-logs-and-target-${{ matrix.python-version }}-${{ matrix.pip-requirements }}
-          retention-days: 3
-          path: |
-            integration_tests/logs
-            integration_tests/target
-      - id: exit
-        if: ${{ steps.run-unit-tests.outcome == 'failure' }}
-        run: |
-          exit 1
-
-  test-dbt-fusion:
-    runs-on: ubuntu-latest
-    env:
-      DBT_DATA_PRIVACY_TEST_PROJECT: "${{ secrets.DBT_DATA_PRIVACY_TEST_PROJECT }}"
-    defaults:
-      run:
-        shell: bash
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install dbt Fusion
-        run: |
-          curl -fsSL https://public.cdn.getdbt.com/fs/install/install.sh | sh -s -- --update
-      - name: Run unit tests
-        id: run-unit-tests
-        working-directory: "${{ github.workspace }}/integration_tests"
-        run: |
-          bash run_unit_tests.sh
-      # Save artifacts for debug
-      - name: Save logs and artifacts if failed
-        if: always()
-        uses: actions/upload-artifact@v6
-        with:
-          name: save-logs-and-target-fusion
           retention-days: 3
           path: |
             integration_tests/logs

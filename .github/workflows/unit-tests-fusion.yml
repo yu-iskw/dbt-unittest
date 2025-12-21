@@ -1,0 +1,58 @@
+name: Unit tests
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+# TODO uncomment when the workflow gets stable.
+#    paths:
+#      - macros/
+#      - integration_tests/macros/
+
+jobs:
+  test-dbt-fusion:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: dbt_unittest
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install dbt Fusion
+        run: |
+          curl -fsSL https://public.cdn.getdbt.com/fs/install/install.sh | sh -s -- --update
+      - name: Run unit tests
+        id: run-unit-tests
+        working-directory: "${{ github.workspace }}/integration_tests"
+        run: |
+          # We have to use postgres target because Fusion doesn't support DuckDB as of time of writing.
+          bash run_unit_tests.sh --target postgres
+      # Save artifacts for debug
+      - name: Save logs and artifacts if failed
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: save-logs-and-target-fusion
+          retention-days: 3
+          path: |
+            integration_tests/logs
+            integration_tests/target
+      - id: exit
+        if: ${{ steps.run-unit-tests.outcome == 'failure' }}
+        run: |
+          exit 1
