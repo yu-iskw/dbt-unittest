@@ -54,7 +54,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install pip
         run: |
-          pip install -U pip==23.0.1
+          pip install -U "pip>=25.0.0,<26.0.0"
       - name: Install dbt
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
