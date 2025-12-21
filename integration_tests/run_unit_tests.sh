@@ -6,7 +6,7 @@ INTEGRATION_TESTS_DIR="$(dirname "$(readlink -f "$0")")"
 
 # Default values
 dbt_profiles_dir="${INTEGRATION_TESTS_DIR}/profiles"
-dbt_target="duckdb"
+dbt_target="postgres"
 
 # Parse options and arguments
 while (($# > 0)); do

@@ -1,12 +1,6 @@
 default:
-  target: duckdb
+  target: postgres
   outputs:
-    duckdb:
-      type: duckdb
-      path: "{{ env_var('DBT_DUCKDB_PATH', 'integration_tests.duckdb') }}"
-      schema: "{{ env_var('DBT_DUCKDB_SCHEMA', 'dbt_unittest') }}"
-      threads: |
-        {{ env_var("DBT_THREADS", 5) }}
     postgres:
       type: postgres
       host: "{{ env_var('DBT_POSTGRES_HOST', 'localhost') }}"
@@ -15,5 +9,11 @@ default:
       password: "{{ env_var('DBT_POSTGRES_PASSWORD', 'postgres') }}"
       database: "{{ env_var('DBT_POSTGRES_DATABASE', 'dbt_unittest') }}"
       schema: "{{ env_var('DBT_POSTGRES_SCHEMA', 'dbt_unittest') }}"
+      threads: |
+        {{ env_var("DBT_THREADS", 5) }}
+    duckdb:
+      type: duckdb
+      path: "{{ env_var('DBT_DUCKDB_PATH', 'integration_tests.duckdb') }}"
+      schema: "{{ env_var('DBT_DUCKDB_SCHEMA', 'dbt_unittest') }}"
       threads: |
         {{ env_var("DBT_THREADS", 5) }}
