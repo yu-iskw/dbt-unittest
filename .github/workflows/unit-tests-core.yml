@@ -1,4 +1,4 @@
-name: Unit tests
+name: Unit tests with Core
 on:
   workflow_dispatch:
   push:
