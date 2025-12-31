@@ -1,13 +1,18 @@
 name: Lint resources
 on:
   pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
-  pre-commit:
+  check-style:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v6
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.1
         with:
-          python-version: '3.9'
-      - uses: pre-commit/action@v3.0.1
+          extra_args: --all-files
