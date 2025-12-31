@@ -1,0 +1,10 @@
+version: 2
+
+macros:
+  - name: assert_dict_equals
+    description: Test that two dictionaries are equal.
+    arguments:
+      - name: actual
+        description: Actual dictionary.
+      - name: expected
+        description: Expected dictionary.

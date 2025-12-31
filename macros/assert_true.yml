@@ -1,0 +1,8 @@
+version: 2
+
+macros:
+  - name: assert_true
+    description: Test that expr is true.
+    arguments:
+      - name: condition
+        description: Expression to evaluate.

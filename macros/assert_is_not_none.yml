@@ -1,0 +1,8 @@
+version: 2
+
+macros:
+  - name: assert_is_not_none
+    description: Test that expr is not None.
+    arguments:
+      - name: value
+        description: Value to evaluate.

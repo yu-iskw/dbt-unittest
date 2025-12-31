@@ -1,0 +1,10 @@
+version: 2
+
+macros:
+  - name: assert_not_in
+    description: Test that member is not in container.
+    arguments:
+      - name: value
+        description: Value expected to be absent.
+      - name: unexpected
+        description: Container the value should not be in.
