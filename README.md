@@ -253,8 +253,8 @@ Return true if two dictionaries are equal. Dictionaries may contain nested dicti
 ## Contributors
 <!-- readme: contributors -start -->
 <table>
- <tbody>
-  <tr>
+	<tbody>
+		<tr>
             <td align="center">
                 <a href="https://github.com/yu-iskw">
                     <img src="https://avatars.githubusercontent.com/u/1523515?v=4" width="100;" alt="yu-iskw"/>
@@ -283,7 +283,7 @@ Return true if two dictionaries are equal. Dictionaries may contain nested dicti
                     <sub><b>Ryan Hill</b></sub>
                 </a>
             </td>
-  </tr>
- <tbody>
+		</tr>
+	<tbody>
 </table>
 <!-- readme: contributors -end -->
