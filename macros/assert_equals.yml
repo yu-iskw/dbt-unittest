@@ -1,0 +1,10 @@
+version: 2
+
+macros:
+  - name: assert_equals
+    description: Test that first and second are equal.
+    arguments:
+      - name: actual
+        description: Actual value.
+      - name: expected
+        description: Expected value.

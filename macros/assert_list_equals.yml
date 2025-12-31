@@ -1,0 +1,10 @@
+version: 2
+
+macros:
+  - name: assert_list_equals
+    description: Tests that two lists are equal.
+    arguments:
+      - name: actual
+        description: Actual list.
+      - name: expected
+        description: Expected list.

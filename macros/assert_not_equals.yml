@@ -1,0 +1,10 @@
+version: 2
+
+macros:
+  - name: assert_not_equals
+    description: Test that first and second are not equal.
+    arguments:
+      - name: actual
+        description: Actual value.
+      - name: unexpected
+        description: Value that should not equal actual.
