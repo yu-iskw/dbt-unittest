@@ -1,8 +1,8 @@
 all: setup docker-up test docker-down
 
-setup: setup-dbt-1.8 setup-dbt-1.9 setup-dbt-1.10
+setup: setup-dbt-1.8 setup-dbt-1.9 setup-dbt-1.10 setup-dbt-1.11
 
-test: test-dbt-1.8 test-dbt-1.9 test-dbt-1.10
+test: test-dbt-1.8 test-dbt-1.9 test-dbt-1.10 test-dbt-1.11
 
 clean:
 	rm -rf .venv-dbt-*
@@ -54,3 +54,11 @@ setup-dbt-1.10:
 
 test-dbt-1.10:
 	uv run --python .venv-dbt-1.10/bin/python bash -x run_unit_tests.sh
+
+setup-dbt-1.11:
+	uv venv --allow-existing .venv-dbt-1.11/
+	uv pip install --python .venv-dbt-1.11/bin/python --pre -r requirements/requirements-1.11.txt
+	uv run --python .venv-dbt-1.11/bin/python dbt deps --profiles-dir profiles
+
+test-dbt-1.11:
+	uv run --python .venv-dbt-1.11/bin/python bash -x run_unit_tests.sh
