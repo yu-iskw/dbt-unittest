@@ -1,0 +1,18 @@
+{
+  "name": "dbt-unittest",
+  "version": "0.3.3",
+  "description": "dbt package providing assertion and comparison macros for unit testing custom dbt macros and packages.",
+  "author": "yu-iskw",
+  "homepage": "https://hub.getdbt.com/yu-iskw/dbt_unittest/latest/",
+  "repository": "https://github.com/yu-iskw/dbt-unittest",
+  "skills": "./skills/",
+  "license": "Apache-2.0",
+  "keywords": [
+    "dbt",
+    "testing",
+    "macros",
+    "unit-tests",
+    "analytics-engineering",
+    "data-engineering"
+  ]
+}
