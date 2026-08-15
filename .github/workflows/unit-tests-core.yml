@@ -1,4 +1,4 @@
-name: Unit tests with Core
+name: Compatibility tests
 on:
   workflow_dispatch:
   push:
@@ -11,38 +11,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test-dbt-core:
+  test:
     if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - session-prefix: core_1_8
-            python-versions: "3.9 3.10 3.11"
-          - session-prefix: core_1_9
-            python-versions: "3.10 3.11"
-          - session-prefix: core_1_10
-            python-versions: "3.10 3.11 3.12"
-          - session-prefix: core_1_11
-            python-versions: "3.10 3.11 3.12"
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: dbt_unittest
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    defaults:
-      run:
-        shell: bash
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,28 +21,13 @@ jobs:
         uses: astral-sh/setup-uv@94527f2e458b27549849d47d273a16bec83a01e9 # v7
         with:
           enable-cache: true
-      - name: Install supported Python versions
-        run: uv python install 3.9 3.10 3.11 3.12
-      - name: Run compatible Python versions in parallel
-        working-directory: "${{ github.workspace }}/integration_tests"
-        env:
-          SESSION_PREFIX: ${{ matrix.session-prefix }}
-          PYTHON_VERSIONS: ${{ matrix.python-versions }}
-          NOX_SPEC: nox[uv]==2026.7.11
-        run: |
-          set -euo pipefail
-          rm -rf .ci-work
-          uvx --from "${NOX_SPEC}" nox -f noxfile_ci.py --list >/dev/null
-          read -r -a versions <<< "${PYTHON_VERSIONS}"
-          printf '%s\n' "${versions[@]}" \
-            | xargs -P "$(nproc)" -I{} \
-                uvx --from "${NOX_SPEC}" nox -f noxfile_ci.py \
-                  -s "${SESSION_PREFIX}-{}"
+      - name: Run complete compatibility suite
+        run: make test-all
       - name: Save logs and artifacts if failed
-        if: always()
+        if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: save-logs-and-target-${{ matrix.session-prefix }}
+          name: compatibility-test-artifacts
           retention-days: 3
           path: |
             integration_tests/.ci-work/**/logs
