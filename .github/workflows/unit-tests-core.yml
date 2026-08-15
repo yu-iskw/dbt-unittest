@@ -16,7 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{ fromJSON(github.event_name == 'pull_request' && '{"include":[{"pip-requirements":"requirements-1.8.txt","python-version":"3.11"},{"pip-requirements":"requirements-1.9.txt","python-version":"3.11"},{"pip-requirements":"requirements-1.10.txt","python-version":"3.12"},{"pip-requirements":"requirements-1.11.txt","python-version":"3.12"}]}' || '{"include":[{"pip-requirements":"requirements-1.8.txt","python-version":"3.9"},{"pip-requirements":"requirements-1.8.txt","python-version":"3.10"},{"pip-requirements":"requirements-1.8.txt","python-version":"3.11"},{"pip-requirements":"requirements-1.9.txt","python-version":"3.10"},{"pip-requirements":"requirements-1.9.txt","python-version":"3.11"},{"pip-requirements":"requirements-1.10.txt","python-version":"3.10"},{"pip-requirements":"requirements-1.10.txt","python-version":"3.11"},{"pip-requirements":"requirements-1.10.txt","python-version":"3.12"},{"pip-requirements":"requirements-1.11.txt","python-version":"3.10"},{"pip-requirements":"requirements-1.11.txt","python-version":"3.11"},{"pip-requirements":"requirements-1.11.txt","python-version":"3.12"}]}') }}
+      matrix:
+        include:
+          - session-prefix: core_1_8
+            python-versions: "3.9 3.10 3.11"
+          - session-prefix: core_1_9
+            python-versions: "3.10 3.11"
+          - session-prefix: core_1_10
+            python-versions: "3.10 3.11 3.12"
+          - session-prefix: core_1_11
+            python-versions: "3.10 3.11 3.12"
     services:
       postgres:
         image: postgres:15
@@ -37,32 +46,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: actions/setup-python@v6
+      - name: Set up uv
+        uses: astral-sh/setup-uv@94527f2e458b27549849d47d273a16bec83a01e9 # v7
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install pip
-        run: |
-          pip install -U "pip>=25.0.0,<26.0.0"
-      - name: Install dbt
+          enable-cache: true
+      - name: Install supported Python versions
+        run: uv python install 3.9 3.10 3.11 3.12
+      - name: Run compatible Python versions in parallel
         working-directory: "${{ github.workspace }}/integration_tests"
+        env:
+          SESSION_PREFIX: ${{ matrix.session-prefix }}
+          PYTHON_VERSIONS: ${{ matrix.python-versions }}
+          NOX_SPEC: nox[uv]==2026.7.11
         run: |
-          # Use 'legacy-resolver' to speed up
-          pip install -r "requirements/${{ matrix.pip-requirements }}"
-      - name: Run unit tests
-        id: run-unit-tests
-        working-directory: "${{ github.workspace }}/integration_tests"
-        run: |
-          bash run_unit_tests.sh
+          set -euo pipefail
+          rm -rf .ci-work
+          uvx --from "${NOX_SPEC}" nox -f noxfile_ci.py --list >/dev/null
+          printf '%s\n' ${PYTHON_VERSIONS} \
+            | xargs -P "$(nproc)" -I{} \
+                uvx --from "${NOX_SPEC}" nox -f noxfile_ci.py \
+                  -s "${SESSION_PREFIX}-{}"
       - name: Save logs and artifacts if failed
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: save-logs-and-target-${{ matrix.python-version }}-${{ matrix.pip-requirements }}
+          name: save-logs-and-target-${{ matrix.session-prefix }}
           retention-days: 3
           path: |
-            integration_tests/logs
-            integration_tests/target
-      - id: exit
-        if: ${{ steps.run-unit-tests.outcome == 'failure' }}
-        run: |
-          exit 1
+            integration_tests/.ci-work/**/logs
+            integration_tests/.ci-work/**/target
