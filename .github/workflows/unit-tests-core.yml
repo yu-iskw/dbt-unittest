@@ -62,7 +62,8 @@ jobs:
           set -euo pipefail
           rm -rf .ci-work
           uvx --from "${NOX_SPEC}" nox -f noxfile_ci.py --list >/dev/null
-          printf '%s\n' ${PYTHON_VERSIONS} \
+          read -r -a versions <<< "${PYTHON_VERSIONS}"
+          printf '%s\n' "${versions[@]}" \
             | xargs -P "$(nproc)" -I{} \
                 uvx --from "${NOX_SPEC}" nox -f noxfile_ci.py \
                   -s "${SESSION_PREFIX}-{}"
