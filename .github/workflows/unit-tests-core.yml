@@ -5,44 +5,18 @@ on:
     branches:
       - main
   pull_request:
-# TODO uncomment when the workflow gets stable.
-#    paths:
-#      - macros/
-#      - integration_tests/macros/
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test-dbt-core:
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          # dbt-core 1.8
-          - pip-requirements: requirements-1.8.txt
-            python-version: "3.9"
-          - pip-requirements: requirements-1.8.txt
-            python-version: "3.10"
-          - pip-requirements: requirements-1.8.txt
-            python-version: "3.11"
-          # dbt-core 1.9
-          - pip-requirements: requirements-1.9.txt
-            python-version: "3.10"
-          - pip-requirements: requirements-1.9.txt
-            python-version: "3.11"
-          # dbt-core 1.10
-          - pip-requirements: requirements-1.10.txt
-            python-version: "3.10"
-          - pip-requirements: requirements-1.10.txt
-            python-version: "3.11"
-          - pip-requirements: requirements-1.10.txt
-            python-version: "3.12"
-          # dbt-core 1.11
-          - pip-requirements: requirements-1.11.txt
-            python-version: "3.10"
-          - pip-requirements: requirements-1.11.txt
-            python-version: "3.11"
-          - pip-requirements: requirements-1.11.txt
-            python-version: "3.12"
+      matrix: ${{ fromJSON(github.event_name == 'pull_request' && '{"include":[{"pip-requirements":"requirements-1.8.txt","python-version":"3.11"},{"pip-requirements":"requirements-1.9.txt","python-version":"3.11"},{"pip-requirements":"requirements-1.10.txt","python-version":"3.12"},{"pip-requirements":"requirements-1.11.txt","python-version":"3.12"}]}' || '{"include":[{"pip-requirements":"requirements-1.8.txt","python-version":"3.9"},{"pip-requirements":"requirements-1.8.txt","python-version":"3.10"},{"pip-requirements":"requirements-1.8.txt","python-version":"3.11"},{"pip-requirements":"requirements-1.9.txt","python-version":"3.10"},{"pip-requirements":"requirements-1.9.txt","python-version":"3.11"},{"pip-requirements":"requirements-1.10.txt","python-version":"3.10"},{"pip-requirements":"requirements-1.10.txt","python-version":"3.11"},{"pip-requirements":"requirements-1.10.txt","python-version":"3.12"},{"pip-requirements":"requirements-1.11.txt","python-version":"3.10"},{"pip-requirements":"requirements-1.11.txt","python-version":"3.11"},{"pip-requirements":"requirements-1.11.txt","python-version":"3.12"}]}') }}
     services:
       postgres:
         image: postgres:15
@@ -79,7 +53,6 @@ jobs:
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
           bash run_unit_tests.sh
-      # Save artifacts for debug
       - name: Save logs and artifacts if failed
         if: always()
         uses: actions/upload-artifact@v7
