@@ -81,4 +81,11 @@ def fusion(session: nox.Session) -> None:
         external=True,
     )
     session.chdir(_prepare_workdir(session))
-    session.run("bash", "run_unit_tests.sh", "--target", "postgres", external=True)
+    session.run(
+        "bash",
+        "run_unit_tests.sh",
+        "--target",
+        "postgres",
+        env={"DBT_ALLOW_EXPERIMENTAL_ADAPTERS": "true"},
+        external=True,
+    )
