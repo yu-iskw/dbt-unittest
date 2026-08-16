@@ -9,7 +9,7 @@ from pathlib import Path
 import nox
 
 ROOT = Path(__file__).resolve().parent
-WORK_ROOT = ROOT / ".ci-work"
+PROJECT_ROOT = ROOT.parent
 FUSION_PYTHON = "3.12"
 
 nox.options.default_venv_backend = "uv"
@@ -18,16 +18,23 @@ nox.options.reuse_venv = "yes"
 
 
 def _prepare_workdir(session: nox.Session) -> Path:
-    """Create an isolated dbt project copy for a compatibility session."""
-    workdir = WORK_ROOT / session.name
-    if workdir.exists():
-        shutil.rmtree(workdir)
+    """Create an isolated repository copy while preserving relative package paths."""
+    project_copy = Path(session.create_tmp()) / "project"
+    if project_copy.exists():
+        shutil.rmtree(project_copy)
     shutil.copytree(
-        ROOT,
-        workdir,
-        ignore=shutil.ignore_patterns(".ci-work", "logs", "target", "dbt_packages"),
+        PROJECT_ROOT,
+        project_copy,
+        ignore=shutil.ignore_patterns(
+            ".git",
+            ".nox",
+            ".ci-work",
+            "logs",
+            "target",
+            "dbt_packages",
+        ),
     )
-    return workdir
+    return project_copy / "integration_tests"
 
 
 def _run_core_tests(session: nox.Session, requirements_file: str) -> None:
