@@ -6,5 +6,5 @@ generate-toc:
 
 .PHONY: test-all
 test-all:
-	integration_tests/scripts/run_with_postgres_container.sh \
+	bash integration_tests/scripts/run_with_postgres_container.sh \
 		uv run --with "nox[uv]==2026.7.11" bash ../dev/test_all.sh
