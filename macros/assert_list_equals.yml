@@ -8,3 +8,5 @@ macros:
         description: Actual list.
       - name: expected
         description: Expected list.
+      - name: message
+        description: Optional custom failure message.

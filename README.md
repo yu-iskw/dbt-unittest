@@ -42,6 +42,13 @@ Check [dbt Hub](https://hub.getdbt.com/yu-iskw/dbt_unittest/latest/) for the lat
 
 - dbt-core: 1.0.0 or later
 
+All assertion macros accept an optional final `message` argument. When provided,
+it replaces the default failure message:
+
+```sql
+{{ dbt_unittest.assert_equals(actual_value, expected_value, "Values must match for this model") }}
+```
+
 ## Macros in the dbt package
 
 ### `assert_true`
