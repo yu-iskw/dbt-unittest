@@ -8,3 +8,5 @@ macros:
         description: Actual dictionary.
       - name: expected
         description: Expected dictionary.
+      - name: message
+        description: Optional custom failure message.

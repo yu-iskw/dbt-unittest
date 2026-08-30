@@ -6,3 +6,5 @@ macros:
     arguments:
       - name: condition
         description: Expression to evaluate.
+      - name: message
+        description: Optional custom failure message.

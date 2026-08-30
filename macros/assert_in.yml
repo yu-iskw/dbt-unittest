@@ -8,3 +8,5 @@ macros:
         description: Value expected to be present.
       - name: expected
         description: Container to search in.
+      - name: message
+        description: Optional custom failure message.

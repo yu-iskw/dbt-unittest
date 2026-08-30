@@ -8,3 +8,5 @@ macros:
         description: Value expected to be absent.
       - name: unexpected
         description: Container the value should not be in.
+      - name: message
+        description: Optional custom failure message.

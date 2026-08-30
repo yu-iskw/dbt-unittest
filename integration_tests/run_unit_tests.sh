@@ -25,3 +25,17 @@ dbt deps --profiles-dir "${INTEGRATION_TESTS_DIR}/profiles" --target "${dbt_targ
 dbt run-operation test_macros \
     --profiles-dir "${dbt_profiles_dir}" \
     --target "${dbt_target:?}"
+
+# Verify that assertion failures use a supplied custom message.
+if output=$(dbt run-operation test_assert_custom_message \
+    --profiles-dir "${dbt_profiles_dir}" \
+    --target "${dbt_target:?}" 2>&1); then
+  echo "Expected custom message test to fail"
+  exit 1
+fi
+
+if ! grep -Fq "Custom assertion message" <<<"${output}"; then
+  echo "Custom assertion message was not included in the failure output"
+  echo "${output}"
+  exit 1
+fi

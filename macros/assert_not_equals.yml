@@ -8,3 +8,5 @@ macros:
         description: Actual value.
       - name: unexpected
         description: Value that should not equal actual.
+      - name: message
+        description: Optional custom failure message.

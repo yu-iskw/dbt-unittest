@@ -6,3 +6,5 @@ macros:
     arguments:
       - name: value
         description: Value to evaluate.
+      - name: message
+        description: Optional custom failure message.
