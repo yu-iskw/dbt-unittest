@@ -13,20 +13,6 @@ on:
 jobs:
   test-dbt-fusion:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: dbt_unittest
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
     defaults:
       run:
         shell: bash
@@ -40,8 +26,8 @@ jobs:
         id: run-unit-tests
         working-directory: "${{ github.workspace }}/integration_tests"
         run: |
-          # We have to use postgres target because Fusion doesn't support DuckDB as of time of writing.
-          bash run_unit_tests.sh --target postgres
+          # dbt Fusion 2.x supports duckdb but not the postgres adapter.
+          bash run_unit_tests.sh --target duckdb
       # Save artifacts for debug
       - name: Save logs and artifacts if failed
         if: always()
